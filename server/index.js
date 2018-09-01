@@ -1,10 +1,10 @@
+require("dotenv").config();
 var bodyParser = require("body-parser");
 const express = require("express");
 const github = require("./../helpers/github.js");
 const gitData = require("./../data.json");
-const db = require("./../database/index.js");
 
-require("dotenv").config();
+const db = require("./../database/index.js");
 
 let app = express();
 
