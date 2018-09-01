@@ -4,6 +4,8 @@ const github = require("./../helpers/github.js");
 const gitData = require("./../data.json");
 const db = require("./../database/index.js");
 
+require("dotenv").config();
+
 let app = express();
 
 app.use(express.static(__dirname + "/../client/dist"));

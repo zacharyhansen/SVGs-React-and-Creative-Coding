@@ -19,12 +19,8 @@ let getReposByUsername = (username, callback) => {
     if (error) {
       console.log("errored insode of github request");
     }
-    // console.log("statusCode:", response && response.statusCode);
-    // console.log("body:", JSON.parse(body));
     callback(JSON.parse(body));
   });
 };
-
-// getReposByUsername("zacharyhansen");
 
 module.exports.getReposByUsername = getReposByUsername;
