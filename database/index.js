@@ -28,17 +28,7 @@ let save = (params, callback) => {
 
 let find = (params, callback) => {
   // var result = [];
-  // Repo.distinct("id", (err, ids) => {
-  //   console.log(ids);
-  //   for (let i = 0; i < ids.length; i++) {
-  //     Repo.findOne({ id: ids[i] }, (err, documents) => {
-  //       console.log("docs", documents);
-  //       result.push(documents);
-  //     });
-  //   }
-  //   callback(result);
-  //   console.log("results", result);
-  // });
+  //
 
   Repo.find()
     .sort({ forks: -1 })
