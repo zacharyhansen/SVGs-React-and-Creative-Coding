@@ -1,18 +1,38 @@
-const express = require('express');
+var bodyParser = require("body-parser");
+const express = require("express");
+const github = require("./../helpers/github.js");
+const gitData = require("./../data.json");
+const db = require("./../database/index.js");
+
 let app = express();
 
-app.use(express.static(__dirname + '/../client/dist'));
+app.use(express.static(__dirname + "/../client/dist"));
 
-app.post('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should take the github username provided
-  // and get the repo information from the github API, then
-  // save the repo information in the database
+app.use(bodyParser.json());
+
+app.post("/repos", function(req, res) {
+  // console.log("body", req.body);
+  github.getReposByUsername(req.body.username, data => {
+    console.log("heres the data", data[0].id);
+    for (let i = 0; i < data.length; i++) {
+      var params = {
+        id: data[i].id,
+        name: data[i].name,
+        repos_url: data[i].owner.repos_url,
+        owner_id: data[i].owner.id,
+        owner_login: data[i].owner.login,
+        forks: data[i].forks
+      };
+      db.save(params);
+    }
+  });
+  res.end();
 });
 
-app.get('/repos', function (req, res) {
-  // TODO - your code here!
-  // This route should send back the top 25 repos
+app.get("/repos", function(req, res) {
+  db.find("hi", docs => {
+    res.json(docs);
+  });
 });
 
 let port = 1128;
@@ -20,4 +40,3 @@ let port = 1128;
 app.listen(port, function() {
   console.log(`listening on port ${port}`);
 });
-

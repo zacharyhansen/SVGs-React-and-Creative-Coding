@@ -1,20 +1,30 @@
-const request = require('request');
-const config = require('../config.js');
+// import { callbackify } from "util";
+const util = require("util");
+const gitData = require("./../data.json");
 
-let getReposByUsername = (/* TODO */) => {
-  // TODO - Use the request module to request repos for a specific
-  // user from the github API
+var callbackify = util.callbackify;
+const request = require("request");
+const config = require("../config.js");
 
-  // The options object has been provided to help you out, 
-  // but you'll have to fill in the URL
+let getReposByUsername = (username, callback) => {
   let options = {
-    url: 'FILL ME IN',
+    url: `https://api.github.com/users/${username}/repos`,
     headers: {
-      'User-Agent': 'request',
-      'Authorization': `token ${config.TOKEN}`
+      "User-Agent": "request",
+      Authorization: `token ${config.TOKEN}`
     }
   };
 
-}
+  request(options, function(error, response, body) {
+    if (error) {
+      console.log("errored insode of github request");
+    }
+    // console.log("statusCode:", response && response.statusCode);
+    // console.log("body:", JSON.parse(body));
+    callback(JSON.parse(body));
+  });
+};
+
+// getReposByUsername("zacharyhansen");
 
 module.exports.getReposByUsername = getReposByUsername;
