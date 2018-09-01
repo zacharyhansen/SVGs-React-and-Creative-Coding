@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "react-dev": "webpack -d --watch",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "build": "webpack",
+    "heroku-postbuild": "npm run build"
   },
   "author": "Beth Johnson",
   "license": "ISC",
