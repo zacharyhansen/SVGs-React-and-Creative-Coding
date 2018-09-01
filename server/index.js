@@ -13,24 +13,26 @@ app.use(bodyParser.json());
 app.post("/repos", function(req, res) {
   // console.log("body", req.body);
   github.getReposByUsername(req.body.username, data => {
-    console.log("heres the data", data[0].id);
+    console.log(data[0].id);
+    var params = [];
     for (let i = 0; i < data.length; i++) {
-      var params = {
+      params.push({
         id: data[i].id,
         name: data[i].name,
         repos_url: data[i].owner.repos_url,
         owner_id: data[i].owner.id,
         owner_login: data[i].owner.login,
         forks: data[i].forks
-      };
-      db.save(params);
+      });
     }
+    db.save(params, () => {
+      res.end();
+    });
   });
-  res.end();
 });
 
 app.get("/repos", function(req, res) {
-  db.find("hi", docs => {
+  db.find(null, docs => {
     res.json(docs);
   });
 });
